@@ -3,6 +3,9 @@ import { initialContactState, validateContact } from './contact';
 import { submitContact } from './app/contact-actions';
 import { profile } from './content';
 
+const sendMail = vi.hoisted(() => vi.fn());
+vi.mock('nodemailer', () => ({ default: { createTransport: () => ({ sendMail }) } }));
+
 const validForm = () => {
   const data = new FormData();
   data.set('name', 'Test Visitor');
@@ -14,17 +17,15 @@ const validForm = () => {
 };
 
 describe('Contact form validation and mail delivery', () => {
-  const mailRequest = vi.fn<typeof fetch>();
+  const mailRequest = sendMail;
 
   beforeEach(() => {
-    vi.stubGlobal('fetch', mailRequest);
-    vi.stubEnv('RESEND_API_KEY', 'test-key');
-    vi.stubEnv('CONTACT_EMAIL_FROM', 'Portfolio <contact@example.com>');
+    vi.stubEnv('GMAIL_USER', 'sender@gmail.com');
+    vi.stubEnv('GMAIL_APP_PASSWORD', 'abcd efgh ijkl mnop');
     vi.stubEnv('CONTACT_EMAIL_TO', '');
   });
 
   afterEach(() => {
-    vi.unstubAllGlobals();
     vi.unstubAllEnvs();
     mailRequest.mockReset();
   });
@@ -89,44 +90,35 @@ describe('Contact form validation and mail delivery', () => {
   });
 
   it('uses the fixed recipient and the validated sender as reply-to', async () => {
-    mailRequest.mockResolvedValue(Response.json({ id: 'test-email-id' }));
+    mailRequest.mockResolvedValue({ accepted: [profile.email], rejected: [] });
     const form = validForm();
     form.set('to', 'untrusted@example.com');
     const result = await submitContact(initialContactState, form);
     expect(result.status).toBe('success');
     expect(mailRequest).toHaveBeenCalledOnce();
-    const [url, options] = mailRequest.mock.calls[0];
-    expect(url).toBe('https://api.resend.com/emails');
-    const payload: unknown = JSON.parse(String(options?.body));
-    expect(payload).toMatchObject({ to: [profile.email], reply_to: 'visitor@example.com', subject: 'Portfolio: Project enquiry' });
-    expect(payload).not.toHaveProperty('html');
+    const options: unknown = mailRequest.mock.calls[0][0];
+    expect(options).toMatchObject({ to: profile.email, replyTo: 'visitor@example.com', subject: 'Portfolio: Project enquiry' });
+    expect(options).not.toHaveProperty('html');
   });
 
   it('does not claim success or lose the message when mail is unconfigured', async () => {
-    vi.stubEnv('RESEND_API_KEY', '');
+    vi.stubEnv('GMAIL_APP_PASSWORD', '');
     const result = await submitContact(initialContactState, validForm());
     expect(result.status).toBe('error');
     expect(result.values.message).toBe(validForm().get('message'));
     expect(mailRequest).not.toHaveBeenCalled();
   });
 
-  it.each([400, 429, 500])('handles provider HTTP %s without exposing provider details', async status => {
-    mailRequest.mockResolvedValue(Response.json({ message: 'Private provider details' }, { status }));
+  it('handles SMTP failure without exposing details', async () => {
+    mailRequest.mockRejectedValue(new Error('Invalid login: private SMTP details'));
     const result = await submitContact(initialContactState, validForm());
     expect(result.status).toBe('error');
-    expect(result.message).not.toContain('Private provider details');
+    expect(result.message).not.toContain('private SMTP details');
     expect(result.values.email).toBe('visitor@example.com');
   });
 
-  it('handles a timeout without discarding entered data', async () => {
-    mailRequest.mockRejectedValue(new DOMException('Timed out', 'TimeoutError'));
-    const result = await submitContact(initialContactState, validForm());
-    expect(result.status).toBe('error');
-    expect(result.values.message).toBe(validForm().get('message'));
-  });
-
-  it('requires provider acknowledgement before reporting success', async () => {
-    mailRequest.mockResolvedValue(Response.json({}));
+  it('does not report success when the recipient is rejected', async () => {
+    mailRequest.mockResolvedValue({ accepted: [], rejected: [profile.email] });
     expect((await submitContact(initialContactState, validForm())).status).toBe('error');
   });
 });
