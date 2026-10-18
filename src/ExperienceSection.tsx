@@ -1,22 +1,23 @@
+'use client';
+
 import { m } from 'motion/react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { alpha, useTheme } from '@mui/material/styles';
-import HubOutlined from '@mui/icons-material/HubOutlined';
-import ApartmentOutlined from '@mui/icons-material/ApartmentOutlined';
-import TerminalOutlined from '@mui/icons-material/TerminalOutlined';
+import CampaignOutlined from '@mui/icons-material/CampaignOutlined';
+import CodeRounded from '@mui/icons-material/CodeRounded';
 import ShoppingBagOutlined from '@mui/icons-material/ShoppingBagOutlined';
 import SchoolOutlined from '@mui/icons-material/SchoolOutlined';
 import TrendingUp from '@mui/icons-material/TrendingUp';
 import { experience } from './content';
 import { Reveal, SectionLabel } from './components';
 import { useMotionPaused } from './motion';
+import { ConversionCTA } from './ConversionCTA';
 
 const companyIcons = {
-  'GrowME Marketing': HubOutlined,
-  WeBeeline: ApartmentOutlined,
-  'Breakwater Vantage': TerminalOutlined,
+  'GrowME Marketing': CampaignOutlined,
+  WeBeeline: CodeRounded,
   IdoSell: ShoppingBagOutlined,
 };
 const ease = [.22, 1, .36, 1] as const;
@@ -24,8 +25,8 @@ const ease = [.22, 1, .36, 1] as const;
 export const ExperienceSection = () => {
   const paused = useMotionPaused();
   const theme = useTheme();
-  return <Box component="section" id="experience" aria-labelledby="experience-title" sx={{ py: 9, borderTop: 1, borderColor: 'divider' }}>
-    <Reveal><SectionLabel>03 / Experience</SectionLabel><Typography id="experience-title" variant="h2" sx={{ fontSize: { xs: '3rem', md: '4rem' }, mt: 2, mb: 6 }}>Built over time.</Typography></Reveal>
+  return <Box component="section" id="experience" aria-labelledby="experience-title" sx={{ py: { xs: 8, md: 11 }, borderTop: 1, borderColor: 'divider' }}>
+    <Reveal><SectionLabel>04 / Professional experience</SectionLabel><Typography id="experience-title" variant="h2" sx={{ fontSize: { xs: '3rem', md: '4rem' }, mt: 2, mb: 6 }}>Built over time.</Typography></Reveal>
     <Box component="ol" sx={{ p: 0, m: 0, listStyle: 'none' }}>
       {experience.map((item, index) => {
         const Icon = companyIcons[item.company];
@@ -54,8 +55,8 @@ export const ExperienceSection = () => {
               <Typography variant="body2" color="text.secondary">{item.location}</Typography>
             </Stack>
             <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1.25fr' }, gap: { xs: 2, md: 4 } }}>
-              <Box><Typography component="h3" sx={{ fontSize: { xs: '1.35rem', md: '1.6rem' }, fontWeight: 500 }}>{item.company}</Typography><Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>{item.role}</Typography></Box>
-              <Box><Typography variant="body2" color="text.secondary">{item.summary}</Typography>
+              <Box><Typography variant="overline" color="primary.main" sx={{ display: 'block', mb: 1, fontSize: '.7rem' }}>{item.industry}</Typography><Typography component="h3" sx={{ fontSize: { xs: '1.35rem', md: '1.6rem' }, fontWeight: 500 }}>{item.company}</Typography><Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>{item.role}</Typography><Stack direction="row" flexWrap="wrap" gap={1} sx={{ mt: 2 }}>{item.specialties.map(specialty => <Typography key={specialty} variant="body2" sx={{ px: 1.25, py: .5, border: 1, borderColor: 'divider', borderRadius: 1, fontSize: '.7rem' }}>{specialty}</Typography>)}</Stack></Box>
+              <Box><Typography variant="body2" color="text.secondary" sx={{ maxWidth: '72ch' }}>{item.summary}</Typography>
                 <Stack component={m.div} direction="row" gap={1} alignItems="flex-start"
                   initial={paused ? false : { opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }}
                   animate={paused ? { opacity: 1, y: 0 } : undefined} viewport={{ once: true }}
@@ -69,5 +70,6 @@ export const ExperienceSection = () => {
       })}
     </Box>
     <Reveal><Stack direction="row" gap={2} alignItems="flex-start" sx={{ mt: 3, pl: { xs: 0, md: 10 }, color: 'text.secondary' }}><SchoolOutlined sx={{ color: 'secondary.main' }} /><Typography variant="body2">Master’s degrees in Computer Science & IT<br />West Pomeranian University of Technology · Odesa Polytechnic National University</Typography></Stack></Reveal>
+    <ConversionCTA title="Could this experience help your team?" description="Tell me about your role, the product and the engineering challenges you want to solve." label="Let’s talk about your team" source="experience" intent="Hiring / opportunity" />
   </Box>;
 };

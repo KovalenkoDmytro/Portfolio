@@ -1,7 +1,10 @@
+'use client';
+
 import type { ReactNode } from 'react';
 import { m } from 'motion/react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { alpha } from '@mui/material/styles';
 import { useMotionPaused } from './motion';
 import CodeRounded from '@mui/icons-material/CodeRounded';
 import HubRounded from '@mui/icons-material/HubRounded';
@@ -68,7 +71,7 @@ const accordionIcons = {
 export const ProjectAccordion = ({ title, content, id, icon }: ProjectAccordionProps) => {
   const Icon = accordionIcons[icon];
   const contentId = `${id}-content`;
-  return <Accordion disableGutters elevation={0} sx={{ bgcolor: 'background.paper', border: 1, borderColor: 'divider', borderRadius: 2, overflow: 'hidden', mb: 1.25, transition: 'border-color .2s, background-color .2s', '&:before': { display: 'none' }, '&:hover': { borderColor: 'primary.main', bgcolor: 'rgba(210, 252, 134, .035)' }, '&.Mui-expanded': { m: '0 0 10px', borderColor: 'primary.main' } }}>
+  return <Accordion disableGutters elevation={0} sx={{ bgcolor: 'background.paper', border: 1, borderColor: 'divider', borderRadius: 2, overflow: 'hidden', mb: 1.25, transition: 'border-color .2s, background-color .2s', '&:before': { display: 'none' }, '&:hover': { borderColor: 'primary.main', bgcolor: (theme) => alpha(theme.palette.primary.main, .035) }, '&.Mui-expanded': { m: '0 0 10px', borderColor: 'primary.main' } }}>
     <AccordionSummary expandIcon={<ExpandMoreRounded sx={{ transition: 'transform .25s', '.Mui-expanded &': { transform: 'rotate(180deg)' } }} />} id={id} aria-controls={contentId} sx={{ minHeight: 64, px: { xs: 1.5, md: 2 }, '&.Mui-expanded': { minHeight: 64 }, '& .MuiAccordionSummary-content': { my: 1.5, '&.Mui-expanded': { my: 1.5 } } }}>
       <Box sx={{ width: 34, height: 34, mr: 1.5, display: 'grid', placeItems: 'center', border: 1, borderColor: 'divider', borderRadius: 1.25, color: 'primary.main', flexShrink: 0 }}><Icon aria-hidden="true" sx={{ fontSize: 18 }} /></Box>
       <Box><Typography variant="body2" sx={{ fontWeight: 600 }}>{title}</Typography><Typography variant="overline" color="text.secondary" sx={{ display: { xs: 'none', sm: 'block' }, fontSize: 9, mt: .25 }}>Project detail</Typography></Box>

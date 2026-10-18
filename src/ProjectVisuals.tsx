@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { m } from 'motion/react';
 import { useMotionPaused } from './motion';

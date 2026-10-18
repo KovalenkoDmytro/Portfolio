@@ -1,51 +1,49 @@
-import { useEffect, useRef } from 'react';
-import { createScope, createTimeline, stagger } from 'animejs';
-import { m } from 'motion/react';
+import Image from 'next/image';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { ContactButton } from './ContactButton';
 import ArrowDownward from '@mui/icons-material/ArrowDownward';
-import ArrowOutward from '@mui/icons-material/ArrowOutward';
-import { useMotionPaused } from './motion';
 import { profile } from './content';
-import { CodingComputer } from './CodingComputer';
 
-export const KineticHero = () => {
-  const root = useRef<HTMLElement>(null);
-  const paused = useMotionPaused();
-
-  useEffect(() => {
-    if (paused) return;
-    const scope = createScope({ root }).add(() => {
-      createTimeline({ defaults: { ease: 'out(4)' } })
-        .add('.hero-word', { y: [35, 0], opacity: [0, 1], duration: 950, delay: stagger(110) })
-        .add('.hero-detail', { y: [18, 0], opacity: [0, 1], duration: 800, delay: stagger(90) }, 350);
-    });
-    return () => scope.revert();
-  }, [paused]);
-
-  return <Box ref={root} component="section" aria-labelledby="intro" sx={{ pt: { xs: 5, md: 6 }, pb: 3 }}>
-    <Stack direction="row" justifyContent="space-between" gap={3} className="hero-detail">
-      <Typography variant="overline" sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}><Box component="span" sx={{ width: 7, height: 7, borderRadius: '50%', bgcolor: 'primary.main', flexShrink: 0 }} />Dmytro Kovalenko / Senior Full-Stack Developer</Typography>
-      <Typography variant="overline" color="text.secondary" sx={{ display: { xs: 'none', md: 'block' }, flexShrink: 0 }}>Calgary, Canada · 51.0447° N</Typography>
-    </Stack>
-    <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, alignItems: 'center', gap: { xs: 3, md: 6 }, mt: { xs: 5, md: 3 } }}>
+export const KineticHero = ({ hasWebsiteWork = false }: { hasWebsiteWork?: boolean }) => (
+  <Box component="section" aria-labelledby="intro" sx={{ pt: { xs: 6, md: 10 }, pb: { xs: 6, md: 9 } }}>
+    <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1.2fr 1fr', lg: '1.3fr 1fr', xl: '1.25fr 1fr' }, gap: { xs: 5, md: 6, lg: 9, xl: 12 }, alignItems: 'center' }}>
       <Box sx={{ minWidth: 0 }}>
-        <Typography component="h1" id="intro" sx={{ fontSize: { xs: 'clamp(3rem, 10vw, 5rem)', md: 'clamp(3.7rem, 6.2vw, 6.2rem)' }, fontWeight: 500, lineHeight: 1.04, letterSpacing: '-.07em' }}>
-          {['Complex', 'systems.', 'Clear', 'experiences.'].map((line, index) => <Box key={line} component="span" className="hero-word" sx={{ display: 'block', color: index >= 2 ? 'primary.main' : 'text.primary' }}>{line}</Box>)}
-        </Typography>
-        <Typography className="hero-detail" sx={{ mt: 3.5, maxWidth: 430, color: 'text.secondary' }}>I’m Dmytro. I turn complex business logic into thoughtful web applications — from the first database table to the final interaction.</Typography>
-        <Stack className="hero-detail" direction="row" gap={1.5} flexWrap="wrap" sx={{ mt: 3.5 }}>
-          <m.div whileHover={paused ? undefined : { y: -4 }} whileTap={paused ? undefined : { scale: .96 }}><Button href="#work" variant="contained" endIcon={<ArrowDownward />}>Explore my work</Button></m.div>
-          <Button href={profile.github} target="_blank" rel="noreferrer" color="inherit" endIcon={<ArrowOutward />}>GitHub</Button>
+        <Stack direction="row" gap={1.5} alignItems="center" sx={{ mb: 3 }}>
+          <Box component="span" sx={{ width: 7, height: 7, borderRadius: '50%', bgcolor: 'primary.main', flexShrink: 0 }} />
+          <Typography variant="overline" color="text.secondary">Independent developer · Calgary, Canada</Typography>
         </Stack>
+        <Typography component="h1" id="intro" sx={{ fontSize: { xs: 'clamp(2.8rem, 9vw, 4.6rem)', md: 'clamp(3.6rem, 5.6vw, 5.4rem)', xl: 'clamp(5.4rem, 5.5vw, 6.4rem)' }, fontWeight: 500, lineHeight: 1.04, letterSpacing: '-.055em' }}>
+          Websites. Apps.<br />Business software.<br /><Box component="span" sx={{ color: 'primary.main' }}>Built around you.</Box>
+        </Typography>
+        <Typography sx={{ mt: 3.5, maxWidth: 640, fontSize: { xs: '1.05rem', md: '1.15rem', xl: '1.25rem' }, color: 'text.secondary' }}>
+          I’m Dmytro Kovalenko, a senior full-stack developer in Calgary. I build websites, web and mobile applications, and custom ERP systems that help businesses work better.
+        </Typography>
+        <Stack direction="row" gap={1.5} flexWrap="wrap" sx={{ mt: 4 }}>
+          <ContactButton source="hero">Let’s discuss your project</ContactButton>
+          <Button href={hasWebsiteWork ? '#website-work' : '#work'} color="inherit" endIcon={<ArrowDownward />}>See my work</Button>
+        </Stack>
+        <Typography variant="body2" color="text.secondary" sx={{ mt: 2.5 }}>From the first conversation to production. One developer, full ownership.</Typography>
       </Box>
-      <CodingComputer />
+      <Box sx={{ position: 'relative', width: '100%', maxWidth: { xs: 410, md: 430, lg: 480, xl: 520 }, justifySelf: { xs: 'center', md: 'end' } }}>
+        <Box aria-hidden="true" sx={{ position: 'absolute', top: 2, right: -12, bottom: 5, left: 12, border: 1, borderColor: 'primary.main', borderRadius: 3, transform: 'rotate(3deg)', opacity: .5 }} />
+        <Box component="figure" sx={{ position: 'relative', m: 0, overflow: 'hidden', borderRadius: 3, border: 1, borderColor: 'divider', bgcolor: 'background.paper', '& img': { display: 'block', width: '100%', height: 'auto' } }}>
+          <Image src="/developer.webp" alt="Dmytro Kovalenko, Senior Full-Stack Developer in Calgary" width={650} height={939} sizes="(max-width: 899px) min(410px, calc(100vw - 48px)), (max-width: 1199px) min(430px, 42vw), (max-width: 1535px) 480px, 520px" preload />
+          <Stack component="figcaption" direction="row" alignItems="center" justifyContent="space-between" gap={2} sx={{ px: 3, py: 2.5, borderTop: 1, borderColor: 'divider' }}>
+            <Box><Typography sx={{ fontWeight: 600 }}>{profile.name}</Typography><Typography variant="body2" color="text.secondary">Senior Full-Stack Developer</Typography></Box>
+            <Typography variant="overline" color="primary.main">YYC / CA</Typography>
+          </Stack>
+        </Box>
+      </Box>
     </Box>
-    <Stack className="hero-detail" direction={{ xs: 'column', sm: 'row' }} gap={1} justifyContent="space-between" sx={{ mt: { xs: 5, md: 5 }, py: 3, borderTop: 1, borderBottom: 1, borderColor: 'divider' }}>
-      <Typography variant="overline" color="text.secondary">Laravel / React / TypeScript</Typography>
-      <Typography variant="overline" color="text.secondary">7+ years of building <Box component="span" sx={{ color: 'primary.main', ml: 2 }}>Code. Connect. Create.</Box></Typography>
-    </Stack>
-  </Box>;
-};
+    <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(3, 1fr)' }, mt: { xs: 6, md: 9 }, borderTop: 1, borderBottom: 1, borderColor: 'divider' }}>
+      {[
+        { value: '7+', label: 'Years building production software', context: 'From ERP platforms to fintech' },
+        { value: '~$50k', label: 'Annual SaaS licensing savings', context: 'Custom platform at GrowME Marketing' },
+        { value: '36 hotels', label: 'Supported by a hospitality SaaS', context: 'Backend architecture at WeBeeline' },
+      ].map(item => <Box key={item.label} sx={{ py: 3.5, pr: 2 }}><Typography sx={{ fontSize: { xs: '2.4rem', md: '3rem' }, lineHeight: 1.1, letterSpacing: '-.05em' }}>{item.value}</Typography><Typography variant="body2" sx={{ mt: 1.5 }}>{item.label}</Typography><Typography variant="body2" color="text.secondary" sx={{ mt: .5, fontSize: '.8rem' }}>{item.context}</Typography></Box>)}
+    </Box>
+  </Box>
+);
