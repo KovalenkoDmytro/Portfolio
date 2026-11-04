@@ -7,7 +7,7 @@ export const theme = createTheme({
     primary: { main: colors.green, contrastText: colors.graphite },
     secondary: { main: colors.white, contrastText: colors.graphite },
     background: { default: colors.graphite, paper: lighten(colors.graphite, .04) },
-    text: { primary: colors.white, secondary: alpha(colors.white, .7) },
+    text: { primary: colors.white, secondary: alpha(colors.white, .78) },
     divider: alpha(colors.white, .16),
   },
   typography: {
@@ -22,7 +22,7 @@ export const theme = createTheme({
   },
   shape: { borderRadius: 16 },
   components: {
-    MuiContainer: { defaultProps: { maxWidth: false }, styleOverrides: { root: { maxWidth: 1760 } } },
+    MuiContainer: { defaultProps: { maxWidth: false }, styleOverrides: { root: { maxWidth: 1440 } } },
     MuiButton: {
       defaultProps: { disableElevation: true, variant: 'outlined' },
       styleOverrides: {

@@ -21,6 +21,14 @@ describe('Server-rendered SEO', () => {
     expect(html).not.toMatch(/style="[^"]*opacity:\s*0(?:;|")/);
   });
 
+  it('keeps every service and its description in the server-rendered homepage', () => {
+    for (const service of services) {
+      expect(html).toContain(`/services/${service.slug}`);
+      expect(html).toContain(service.summary.replaceAll('&', '&amp;'));
+    }
+    expect(html.match(/<h1\b/g)).toHaveLength(1);
+  });
+
   it('embeds parseable profile structured data using the real social links', () => {
     const json = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1];
     expect(json).toBeDefined();

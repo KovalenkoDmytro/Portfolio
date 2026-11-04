@@ -7,7 +7,7 @@ import ArrowOutward from '@mui/icons-material/ArrowOutward';
 import Add from '@mui/icons-material/Add';
 import { SectionLabel } from './components';
 import { faqs, services } from './services';
-import { ConversionCTA } from './ConversionCTA';
+import { ContactButton } from './ContactButton';
 
 export const ServicesSection = () => (
   <Box id="services" component="section" aria-labelledby="services-title" sx={{ py: { xs: 7, md: 10 } }}>
@@ -15,15 +15,16 @@ export const ServicesSection = () => (
       <Box><SectionLabel>01 / What I can help you build</SectionLabel><Typography id="services-title" variant="h2" sx={{ mt: 2 }}>Your next step.<br /><Box component="span" sx={{ color: 'primary.main' }}>The right software.</Box></Typography></Box>
       <Typography color="text.secondary" sx={{ maxWidth: 370, alignSelf: { md: 'flex-end' } }}>Websites, apps and business software, supported by SEO, analytics and online advertising for Calgary businesses and teams across Canada.</Typography>
     </Stack>
-    <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', xl: 'repeat(2, minmax(0, 1fr))' }, columnGap: 6, borderTop: 1, borderColor: 'divider' }}>
-      {services.map(service => <Box key={service.slug} component="article" sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '.16fr 1fr 1.1fr auto', xl: 'auto minmax(0, 1fr) auto' }, columnGap: { xs: 4, xl: 3 }, rowGap: 2, py: { xs: 3, md: 4 }, borderBottom: 1, borderColor: 'divider', alignItems: 'start' }}>
-        <Typography variant="overline" color="primary.main">/{service.number}</Typography>
-        <Typography component="h3" sx={{ fontSize: { xs: '1.5rem', md: '1.8rem' }, lineHeight: 1.25, letterSpacing: '-.035em' }}><Link href={`/services/${service.slug}`} color="text.primary" sx={{ '&:hover': { color: 'primary.main' } }}>{service.name}</Link></Typography>
-        <Box sx={{ gridColumn: { xl: '2 / 3' }, gridRow: { xl: 2 }, maxWidth: '65ch' }}><Typography color="text.secondary" variant="body2">{service.summary}</Typography><Stack direction="row" flexWrap="wrap" gap={1.5} sx={{ mt: 2 }}>{service.tags.map(tag => <Typography key={tag} variant="overline" sx={{ fontSize: '.66rem' }}>{tag}</Typography>)}</Stack></Box>
-        <Link href={`/services/${service.slug}`} aria-label={`Explore ${service.name.toLowerCase()} in Calgary`} sx={{ color: 'primary.contrastText', bgcolor: 'primary.main', display: 'inline-flex', minWidth: 48, minHeight: 48, justifyContent: 'center', alignItems: 'center', border: 1, borderColor: 'primary.main', borderRadius: '50%', justifySelf: { xs: 'start', md: 'end' }, gridColumn: { xl: 3 }, gridRow: { xl: 1 }, '&:hover': { borderColor: 'primary.main' } }}><ArrowOutward /></Link>
+    <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(2, minmax(0, 1fr))' }, columnGap: { md: 6, lg: 10 }, borderTop: 1, borderColor: 'divider' }}>
+      {services.map(service => <Box key={service.slug} component="article" sx={{ py: { xs: 3, md: 4 }, borderBottom: 1, borderColor: 'divider' }}>
+        <Stack direction="row" alignItems="baseline" gap={2}>
+          <Typography variant="overline" color="primary.main">/{service.number}</Typography>
+          <Typography component="h3" sx={{ fontSize: { xs: '1.4rem', md: '1.6rem' }, lineHeight: 1.3, letterSpacing: '-.03em' }}><Link href={`/services/${service.slug}`} color="text.primary" sx={{ textDecorationColor: 'transparent', '&:hover': { color: 'primary.main', textDecorationColor: 'currentColor' } }}>{service.name} <ArrowOutward sx={{ fontSize: '.8em', verticalAlign: 'middle' }} /></Link></Typography>
+        </Stack>
+        <Box sx={{ pl: { xs: 0, sm: 5 }, mt: 1.5, maxWidth: '55ch' }}><Typography color="text.secondary">{service.summary}</Typography><Stack direction="row" flexWrap="wrap" gap={1.5} sx={{ mt: 2 }}>{service.tags.map(tag => <Typography key={tag} variant="overline" color="text.secondary" sx={{ fontSize: '.66rem' }}>{tag}</Typography>)}</Stack></Box>
       </Box>)}
     </Box>
-    <ConversionCTA title="Not sure where to start?" description="Tell me what you want to improve. We can work out whether you need a new website, a custom application or a focused fix." label="Discuss your project" source="services" />
+    <Box sx={{ mt: 4 }}><ContactButton source="services">Discuss your project</ContactButton></Box>
   </Box>
 );
 

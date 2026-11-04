@@ -48,7 +48,7 @@ The grid is a design choice to expose all work without requiring visitors to wai
 
 ## Contact calls to action
 
-Contextual CTA blocks follow the website gallery (once images exist), services, selected projects and professional experience. The header and service pages also link to the homepage contact form. Homepage project CTAs select `Project enquiry`, while employer CTAs select `Hiring / opportunity`. The context changes only the enquiry type; it does not overwrite the visitor's message or contact details.
+Contextual calls to action follow the website gallery (once images exist), services, selected projects and professional experience. The header and service pages also link to the homepage contact form. Homepage project CTAs select `Project enquiry`, while employer CTAs select `Hiring / opportunity`. The context changes only the enquiry type; it does not overwrite the visitor's message or contact details.
 
 CTA links expose `data-cta` source labels and contextual buttons expose `data-enquiry` for future analytics configuration. These attributes do not install tracking or send analytics events by themselves. The layout uses inline CTAs rather than fixed overlays.
 
@@ -72,7 +72,7 @@ Mail tests mock the provider and do not send real email. Live delivery still nee
 
 ## Wide-screen layout
 
-The shared MUI container supports up to 1,760 pixels, with responsive gutters on the homepage and service pages. At the `xl` breakpoint, services use two columns and screenshot galleries use three. Hero typography and the portrait scale up, while long-form paragraphs keep readable line lengths.
+The shared MUI container supports up to 1,440 pixels, with responsive gutters on the homepage and service pages. Services use two columns from the `md` breakpoint, and screenshot galleries use three at `xl`. Hero typography and the portrait scale up, while long-form paragraphs keep readable line lengths.
 
 ## Design and interaction
 

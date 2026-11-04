@@ -25,10 +25,8 @@ export const KineticHero = ({ hasWebsiteWork = false }: { hasWebsiteWork?: boole
           <ContactButton source="hero">Let’s discuss your project</ContactButton>
           <Button href={hasWebsiteWork ? '#website-work' : '#work'} color="inherit" endIcon={<ArrowDownward />}>See my work</Button>
         </Stack>
-        <Typography variant="body2" color="text.secondary" sx={{ mt: 2.5 }}>From the first conversation to production. One developer, full ownership.</Typography>
       </Box>
       <Box sx={{ position: 'relative', width: '100%', maxWidth: { xs: 410, md: 430, lg: 480, xl: 520 }, justifySelf: { xs: 'center', md: 'end' } }}>
-        <Box aria-hidden="true" sx={{ position: 'absolute', top: 2, right: -12, bottom: 5, left: 12, border: 1, borderColor: 'primary.main', borderRadius: 3, transform: 'rotate(3deg)', opacity: .5 }} />
         <Box component="figure" sx={{ position: 'relative', m: 0, overflow: 'hidden', borderRadius: 3, border: 1, borderColor: 'divider', bgcolor: 'background.paper', '& img': { display: 'block', width: '100%', height: 'auto' } }}>
           <Image src="/developer.webp" alt="Dmytro Kovalenko, Senior Full-Stack Developer in Calgary" width={650} height={939} sizes="(max-width: 899px) min(410px, calc(100vw - 48px)), (max-width: 1199px) min(430px, 42vw), (max-width: 1535px) 480px, 520px" preload />
           <Stack component="figcaption" direction="row" alignItems="center" justifyContent="space-between" gap={2} sx={{ px: 3, py: 2.5, borderTop: 1, borderColor: 'divider' }}>
