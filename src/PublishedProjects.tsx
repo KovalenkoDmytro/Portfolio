@@ -1,10 +1,9 @@
+import Image from 'next/image';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import ArrowOutward from '@mui/icons-material/ArrowOutward';
-import InsightsOutlined from '@mui/icons-material/InsightsOutlined';
-import AdminPanelSettingsOutlined from '@mui/icons-material/AdminPanelSettingsOutlined';
 
 const publishedProjects = [
   {
@@ -17,7 +16,8 @@ const publishedProjects = [
     description: 'I developed TrackFlow to help Shopify merchants understand customer actions in their online store. The app brings together web pixels and custom event monitoring for store analytics.',
     features: ['Pixel tracking and deployment', 'Real-time analytics collection', 'Custom customer event monitoring'],
     status: 'Published on the Shopify App Store',
-    Icon: InsightsOutlined,
+    logo: '/logos/shopify.svg',
+    logoAlt: 'Shopify',
   },
   {
     id: 'admin-change-audit',
@@ -29,7 +29,8 @@ const publishedProjects = [
     description: 'My WordPress plugin gives site owners a dedicated audit trail of administrative activity. It records content, login and plugin changes in an owner-only viewer, without requiring an external account or service.',
     features: ['Owner-only activity log with filters', 'Readable before-and-after content changes', 'Optional extra password and log retention'],
     status: 'Published on WordPress.org · Used on live sites',
-    Icon: AdminPanelSettingsOutlined,
+    logo: '/logos/wordpress.svg',
+    logoAlt: 'WordPress',
   },
 ] as const;
 
@@ -39,8 +40,8 @@ export const PublishedProjects = () => (
     <Typography component="h3" sx={{ fontSize: { xs: '1.6rem', md: '2.1rem' }, letterSpacing: '-.035em', mt: 1.5 }}>Tools that go beyond the portfolio.</Typography>
     <Typography color="text.secondary" sx={{ mt: 1.5, maxWidth: 720 }}>A Shopify app and a WordPress plugin I developed and published for merchants and site owners. Practical examples of my platform development work.</Typography>
     <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' }, gap: 3, mt: 4 }}>
-      {publishedProjects.map(({ Icon, ...project }) => <Box component="article" key={project.id} aria-labelledby={`${project.id}-title`} sx={{ p: { xs: 3, md: 4 }, border: 1, borderColor: 'divider', borderRadius: 2, bgcolor: 'background.paper', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-        <Stack direction="row" gap={2} alignItems="center" justifyContent="space-between" sx={{ width: '100%', mb: 3 }}><Icon aria-hidden="true" sx={{ fontSize: 32, color: 'primary.main' }} /><Typography variant="overline" color="text.secondary">{project.platform}</Typography></Stack>
+      {publishedProjects.map(project => <Box component="article" key={project.id} aria-labelledby={`${project.id}-title`} sx={{ p: { xs: 3, md: 4 }, border: 1, borderColor: 'divider', borderRadius: 2, bgcolor: 'background.paper', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+        <Stack direction="row" alignItems="center" sx={{ width: '100%', mb: 3 }}><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 164, height: 58, px: 2, bgcolor: '#fff', borderRadius: 1.5 }}><Image src={project.logo} alt={project.logoAlt} width={132} height={40} style={{ width: '100%', height: 'auto', maxHeight: 40, objectFit: 'contain' }} /></Box></Stack>
         <Typography id={`${project.id}-title`} component="h4" sx={{ fontSize: { xs: '1.5rem', md: '1.8rem' }, lineHeight: 1.2, letterSpacing: '-.035em' }}>{project.name}</Typography>
         <Typography sx={{ mt: 2, fontWeight: 500 }}>{project.headline}</Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>{project.description}</Typography>
