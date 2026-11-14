@@ -26,7 +26,7 @@ pnpm build
 
 From your local checkout, run `./scripts/deploy-portfolio.sh`. It connects using the SSH host `my-server-cf` (the host used by the `homeserver` shell alias), fast-forwards `master` in `~/apps/portfolio`, installs locked npm dependencies if they changed or are missing, builds, and restarts only the `portfolio` Supervisor program. SSH and sudo may prompt for credentials. Set `PORTFOLIO_SSH_HOST` to override the SSH host.
 
-Commit and push changes first: the server deploys `origin/master`, not local uncommitted files. The script stops if the server checkout is dirty, the branch is not `master`, the pull is not a fast-forward, or a command fails. A failed in-place Next.js build can affect the existing `.next` directory; check and rebuild before restarting the process if that happens.
+Commit and push changes first: the server deploys `origin/master`, not local uncommitted files. The script stops if tracked files on the server have changes, the branch is not `master`, the pull is not a fast-forward, or a command fails. Untracked files are left in place; Git stops the pull if one would be overwritten. A failed in-place Next.js build can affect the existing `.next` directory; check and rebuild before restarting the process if that happens.
 
 ## Rendering and SEO
 

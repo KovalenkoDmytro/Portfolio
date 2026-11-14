@@ -11,9 +11,9 @@ if [[ ! -d .git ]]; then
   printf 'Error: %s is not a Git checkout.\n' "$PWD" >&2
   exit 1
 fi
-if [[ -n "$(git status --porcelain --untracked-files=normal)" ]]; then
-  printf 'Error: server checkout has uncommitted or untracked files. Resolve them before deploying.\n' >&2
-  git status --short >&2
+if [[ -n "$(git status --porcelain --untracked-files=no)" ]]; then
+  printf 'Error: server checkout has changes to tracked files. Resolve them before deploying.\n' >&2
+  git status --short --untracked-files=no >&2
   exit 1
 fi
 if [[ "$(git branch --show-current)" != master ]]; then
