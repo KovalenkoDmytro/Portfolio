@@ -32,7 +32,6 @@ pnpm build
 - Seven service landing pages cover website development, web applications, mobile apps, custom ERP software, WordPress/WooCommerce/Shopify development, analytics/conversion tracking, and SEO/digital advertising in Calgary. Each is statically generated with its own title, description, canonical URL, Open Graph metadata, Service JSON-LD and internal links. Copy lives in `src/services.ts`.
 - The homepage includes visible service information, business results with attribution, project work, an employer section, experience, a process section, FAQ and email contact links. FAQ disclosures work without JavaScript.
 - Profile structured data describes the developer as a person in Calgary. No fabricated business address, ratings or customer testimonials are included.
-- The CV link refers to `public/Dmytro-Kovalenko-Resume.pdf`, which is currently missing. Add the real PDF before publishing.
 
 Implementation references: [Next.js installation](https://nextjs.org/docs/app/getting-started/installation), [MUI App Router integration](https://mui.com/material-ui/integrations/nextjs/).
 
@@ -113,7 +112,6 @@ Published platform work includes [TrackFlow on the Shopify App Store](https://ap
 - Published Shopify app and WordPress plugin: `src/PublishedProjects.tsx`
 - Base colors: `src/colors.ts`
 - Theme and typography: `src/theme.ts`
-- Resume: `public/Dmytro-Kovalenko-Resume.pdf`
 
 The portfolio preserves the existing profile, experience, and project descriptions. The colored project panels are interactive workflow diagrams, not product screenshots.
 

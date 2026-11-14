@@ -14,6 +14,59 @@ import { alpha } from '@mui/material/styles';
 import { arcCategories, estateRoles } from './content';
 import type { ArcCategory, EstateRole } from './content';
 
+export const AuditVisual = () => {
+  const paused = useMotionPaused();
+  const events = [
+    { action: 'Updated custom field', target: 'SEO title · Yoast', time: 'just now', tone: '#d2fc86' },
+    { action: 'Deactivated plugin', target: 'Old Analytics', time: '2 min ago', tone: '#ffcf8a' },
+    { action: 'Restored post', target: 'Privacy policy', time: '8 min ago', tone: '#bac8ff' },
+  ];
+  return <Box component={m.div} initial={paused ? false : { opacity: 0, x: 28, rotate: 1.5 }} whileInView={{ opacity: 1, x: 0, rotate: 0 }} animate={paused ? { opacity: 1, x: 0, rotate: 0 } : undefined} whileHover={paused ? undefined : { y: -6, scale: 1.012 }} viewport={{ once: true, amount: .18 }} transition={{ duration: paused ? 0 : .8, ease: [.22, 1, .36, 1] }} sx={{ bgcolor: '#263449', color: 'primary.contrastText', p: { xs: 3, md: 5 }, height: '100%', minHeight: 440, display: 'flex', flexDirection: 'column', borderRadius: 3, transformOrigin: 'right center' }}>
+    <Stack direction="row" justifyContent="space-between" alignItems="center" gap={2}><Typography sx={{ fontSize: 22, fontWeight: 600, letterSpacing: '-.06em' }}>Kovalenko Audit</Typography><Typography variant="overline">Activity log</Typography></Stack>
+    <Typography component="p" variant="h3" sx={{ fontSize: { xs: '2rem', md: '2.5rem' }, mt: 4, mb: 3 }}>Every change.<br />Clear context.</Typography>
+    <Stack spacing={1.25} aria-label="Recent administrator activity">
+      {events.map((event, index) => <Box key={event.action} sx={{ bgcolor: 'rgba(255,255,255,.06)', borderRadius: 1.5, p: 1.5, borderLeft: 3, borderColor: event.tone }}>
+        <Stack direction="row" justifyContent="space-between" gap={2} alignItems="baseline"><Typography variant="body2" sx={{ fontWeight: 600 }}>{event.action}</Typography><Typography variant="caption" sx={{ opacity: .65, whiteSpace: 'nowrap' }}>{event.time}</Typography></Stack>
+        <Typography variant="body2" sx={{ opacity: .72, mt: .35 }}>{event.target}</Typography>
+        {index === 0 && <Typography variant="caption" sx={{ display: 'block', mt: 1, color: event.tone }}>Before → After comparison available</Typography>}
+      </Box>)}
+    </Stack>
+    <Stack direction="row" flexWrap="wrap" gap={1} sx={{ mt: 'auto', pt: 3 }}>
+      {['Owner only', 'No third parties', 'Live updates'].map(label => <Box key={label} component="span" sx={{ border: 1, borderColor: 'rgba(255,255,255,.24)', borderRadius: 10, px: 1.25, py: .5, fontSize: '.75rem' }}>{label}</Box>)}
+    </Stack>
+  </Box>;
+};
+
+export const TrackFlowVisual = () => {
+  const paused = useMotionPaused();
+  return <Box component={m.div} initial={paused ? false : { opacity: 0, x: -28, rotate: -1.5 }} whileInView={{ opacity: 1, x: 0, rotate: 0 }} animate={paused ? { opacity: 1, x: 0, rotate: 0 } : undefined} whileHover={paused ? undefined : { y: -6, scale: 1.012 }} viewport={{ once: true, amount: .18 }} transition={{ duration: paused ? 0 : .8, ease: [.22, 1, .36, 1] }} sx={{ bgcolor: '#a9dfd0', color: 'primary.contrastText', p: { xs: 3, md: 5 }, height: '100%', minHeight: 440, display: 'flex', flexDirection: 'column', borderRadius: 3, transformOrigin: 'left center' }}>
+    <Stack direction="row" flexWrap="wrap" justifyContent="space-between" alignItems="center" gap={1}>
+      <Typography sx={{ fontSize: 28, fontWeight: 600, letterSpacing: '-.06em' }}>TrackFlow ↗</Typography>
+      <Typography variant="overline">Delivery flow</Typography>
+    </Stack>
+    <Typography component="p" variant="h3" sx={{ fontSize: { xs: '2rem', md: '2.5rem' }, mt: 4, mb: 3 }}>One event.<br />Multiple platforms.</Typography>
+    <Box component="ol" aria-label="Event path from store to advertising platforms" sx={{ listStyle: 'none', p: 0, m: 0 }}>
+      {[
+        { title: 'Shopify Web Pixel', detail: 'Product views · Purchases' },
+        { title: 'TrackFlow · Server queue', detail: 'Deduplication · Rate limiting' },
+        { title: 'Google Ads + Meta CAPI', detail: 'Enhanced Conversions · Conversions API' },
+      ].map((step, index) => <Box component="li" key={step.title} sx={{ borderTop: 1, borderColor: (theme) => alpha(theme.palette.primary.contrastText, .2), py: 2 }}>
+        <Stack direction="row" gap={1.5} alignItems="baseline">
+          <Typography variant="overline">0{index + 1}</Typography>
+          <Box><Typography sx={{ fontWeight: 600 }}>{step.title}</Typography><Typography variant="body2">{step.detail}</Typography></Box>
+        </Stack>
+      </Box>)}
+    </Box>
+    <Box sx={{ mt: 'auto', pt: 3 }}>
+      <Typography variant="body2">Separate status for every platform</Typography>
+      <Stack direction="row" flexWrap="wrap" gap={1} sx={{ mt: 1.5 }}>
+        {['queued', 'sent', 'failed'].map(status => <Box key={status} component="span" sx={{ border: 1, borderColor: (theme) => alpha(theme.palette.primary.contrastText, .3), borderRadius: 10, px: 1.5, py: .5, fontFamily: 'Consolas, monospace', fontSize: '.8125rem' }}>{status}</Box>)}
+      </Stack>
+      <Typography variant="body2" sx={{ mt: 2 }}>Also supports TikTok and GA4</Typography>
+    </Box>
+  </Box>;
+};
+
 export const EstateVisual = () => {
   const paused = useMotionPaused();
   const [role, setRole] = useState<EstateRole>('Buyer');

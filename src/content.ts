@@ -3,7 +3,6 @@ export const profile = {
   email: 'dmytrokovalenko.new@gmail.com',
   github: 'https://github.com/KovalenkoDmytro',
   linkedin: 'https://linkedin.com/in/dmytrokovalenko-new',
-  resume: './Dmytro-Kovalenko-Resume.pdf',
 };
 
 export const experience = [
