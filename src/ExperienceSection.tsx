@@ -24,7 +24,7 @@ const companyIcons = {
 const companyLogos = {
   'GrowME Marketing': '/logos/GrowME.webp',
   WeBeeline: '/logos/webeeline.webp',
-  IdoSell: '/logos/IAI.svg',
+  IdoSell: '/logos/IAI.webp',
 } as const;
 const ease = [.22, 1, .36, 1] as const;
 
