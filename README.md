@@ -22,6 +22,12 @@ pnpm build
 
 `pnpm build` writes the production application to `.next/`. Run it with `pnpm start` (or `pnpm preview`). Deploy to a Next.js-compatible host or a Node.js server; uploading the old Vite `dist/` directory is no longer the deployment workflow. This portfolio needs no PHP backend or database.
 
+## Deploy to the home server
+
+From your local checkout, run `./scripts/deploy-portfolio.sh`. It connects using the SSH host `my-server-cf` (the host used by the `homeserver` shell alias), fast-forwards `master` in `~/apps/portfolio`, installs locked npm dependencies if they changed or are missing, builds, and restarts only the `portfolio` Supervisor program. SSH and sudo may prompt for credentials. Set `PORTFOLIO_SSH_HOST` to override the SSH host.
+
+Commit and push changes first: the server deploys `origin/master`, not local uncommitted files. The script stops if the server checkout is dirty, the branch is not `master`, the pull is not a fast-forward, or a command fails. A failed in-place Next.js build can affect the existing `.next` directory; check and rebuild before restarting the process if that happens.
+
 ## Rendering and SEO
 
 - `src/app/page.tsx` and the main layout are Server Components. The homepage is statically prerendered at build time, so its text, headings, links and metadata are included in the initial HTML. Per-request rendering is unnecessary for the current static content.

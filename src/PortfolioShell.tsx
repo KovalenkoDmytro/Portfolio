@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { MotionPausedContext } from './motion';
 import { ContactIntentProvider } from './contact-intent';
+import { ScrollBackdrop } from './ScrollBackdrop';
 
 const loadMotionFeatures = async () => (await import('./motion-features')).features;
 
@@ -17,6 +18,7 @@ export const PortfolioShell = ({ children }: { children: ReactNode }) => {
     <ContactIntentProvider><LazyMotion features={loadMotionFeatures} strict>
       <MotionPausedContext.Provider value={paused}>
         <Box className={paused ? 'motion-paused' : ''} sx={{ overflow: 'clip', position: 'relative', isolation: 'isolate', bgcolor: 'background.default' }}>
+          <ScrollBackdrop />
           {children}
         </Box>
       </MotionPausedContext.Provider>

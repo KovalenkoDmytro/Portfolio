@@ -21,7 +21,7 @@ import { FeaturedProjects } from './FeaturedProjects';
 export const App = () => {
   return <PortfolioShell>
     <Link href="#main" sx={{ position: 'absolute', top: -100, left: 24, zIndex: 10, bgcolor: 'primary.main', color: 'primary.contrastText', p: 2, '&:focus': { top: 16 } }}>Skip to content</Link>
-    <Container maxWidth={false} sx={{ px: { xs: 3, md: 5, lg: 7, xl: 8 }, position: 'relative', zIndex: 1 }}>
+    <Container maxWidth={false} sx={{ px: { xs: 3, md: 5, lg: 7, xl: 8 }, position: 'relative', zIndex: 1, bgcolor: 'rgba(23, 28, 32, .88)', backdropFilter: 'blur(18px) saturate(125%)', WebkitBackdropFilter: 'blur(18px) saturate(125%)', borderLeft: '1px solid rgba(255,255,255,.06)', borderRight: '1px solid rgba(255,255,255,.06)', boxShadow: '0 0 80px rgba(0,0,0,.16)' }}>
       <SiteHeader home />
       <Box component="main" id="main">
         <KineticHero />
