@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import { profile } from './content';
 import { services } from './services';
 
-export const SiteHeader = ({ home = false, showGallery = false }: { home?: boolean; showGallery?: boolean }) => {
+export const SiteHeader = ({ home = false }: { home?: boolean }) => {
   const prefix = home ? '' : '/';
   return <Stack component="header" direction={{ xs: 'column', md: 'row' }} gap={{ xs: 2, md: 4 }} alignItems={{ xs: 'stretch', md: 'center' }} justifyContent="space-between" sx={{ position: 'sticky', top: 0, zIndex: 1100, py: { xs: 1.5, md: 2 }, bgcolor: 'background.default', borderBottom: 1, borderColor: 'divider' }}>
     <Stack direction="row" alignItems="center" gap={2} justifyContent="space-between">
@@ -14,7 +14,6 @@ export const SiteHeader = ({ home = false, showGallery = false }: { home?: boole
       <Typography variant="overline" color="text.secondary" sx={{ display: { xs: 'block', md: 'none' }, fontSize: '.65rem' }}>Calgary, CA</Typography>
     </Stack>
     <Stack component="nav" aria-label="Main navigation" direction="row" flexWrap={{ xs: 'nowrap', md: 'wrap' }} columnGap={{ xs: 1, sm: 1.5 }} rowGap={.5} alignItems="center" sx={{ overflowX: { xs: 'auto', md: 'visible' }, scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none' }, '& > *': { flexShrink: 0 }, '& a:not(.MuiButton-root)': { display: 'inline-flex', alignItems: 'center', minHeight: 44, fontSize: '.85rem', px: 1.5, border: 1, borderColor: 'divider', borderRadius: 100, '&:hover': { color: 'primary.main' } } }}>
-      {showGallery ? <Link href={`${prefix}#website-work`} color="text.secondary">Websites</Link> : null}
       <Link href={`${prefix}#services`} color="text.secondary">Services</Link><Link href={`${prefix}#work`} color="text.secondary">Work</Link><Link href={`${prefix}#about`} color="text.secondary">About</Link><Link href={`${prefix}#experience`} color="text.secondary">Experience</Link><Button href={`${prefix}#contact`} variant="contained" data-cta="header" sx={{ minHeight: 44, px: 2.5, py: 1 }}>Discuss a project ↗</Button>
     </Stack>
   </Stack>;

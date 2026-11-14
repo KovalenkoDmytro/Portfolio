@@ -35,19 +35,13 @@ pnpm build
 
 Implementation references: [Next.js installation](https://nextjs.org/docs/app/getting-started/installation), [MUI App Router integration](https://mui.com/material-ui/integrations/nextjs/).
 
-## Website screenshot gallery
+## Client logos
 
-The homepage includes a screenshot gallery immediately after the hero. All available screenshots appear in a responsive grid, with optional company, industry, location, platform and contribution captions. Clicking a preview opens a scrollable full-size image dialog, with previous/next buttons, keyboard arrows, Escape to close and a link to the original image. The gallery has no automatic rotation or hidden slides.
-
-Add WebP, PNG, JPG, JPEG or AVIF screenshots to `public/work/` and reload the development page. Images are discovered automatically; no component edits are needed. Optional captions and ordering live in `public/work/gallery.json`, keyed by exact filename. Full instructions and an example are in `public/work/README.md`. Without metadata, a title is derived from the filename; client locations and contribution claims are never generated.
-
-Production is statically generated, so rebuild and redeploy to publish new files. When no screenshots have been added, the gallery is hidden in production and only an empty preview is shown in development. Once real work exists, the hero’s work button points to the gallery and a Websites navigation link appears.
-
-The grid is a design choice to expose all work without requiring visitors to wait for a rotating slide. Background on carousel visibility: [Nielsen Norman Group](https://www.nngroup.com/articles/auto-forwarding/).
+Client logos in `public/work/` are listed in `src/client-logos.ts` and displayed in the selected client work section. Update the file and card background there when adding a logo.
 
 ## Contact calls to action
 
-Contextual calls to action follow the website gallery (once images exist), services, selected projects and professional experience. The header and service pages also link to the homepage contact form. Homepage project CTAs select `Project enquiry`, while employer CTAs select `Hiring / opportunity`. The context changes only the enquiry type; it does not overwrite the visitor's message or contact details.
+Contextual calls to action follow services, selected projects and professional experience. The header and service pages also link to the homepage contact form. Homepage project CTAs select `Project enquiry`, while employer CTAs select `Hiring / opportunity`. The context changes only the enquiry type; it does not overwrite the visitor's message or contact details.
 
 CTA links expose `data-cta` source labels and contextual buttons expose `data-enquiry` for future analytics configuration. These attributes do not install tracking or send analytics events by themselves. The layout uses inline CTAs rather than fixed overlays.
 
@@ -71,7 +65,7 @@ Mail tests mock the provider and do not send real email. Live delivery still nee
 
 ## Wide-screen layout
 
-The shared MUI container supports up to 1,440 pixels, with responsive gutters on the homepage and service pages. Services use two columns from the `md` breakpoint, and screenshot galleries use three at `xl`. Hero typography and the portrait scale up, while long-form paragraphs keep readable line lengths.
+The shared MUI container supports up to 1,440 pixels, with responsive gutters on the homepage and service pages. Services use two columns from the `md` breakpoint. Hero typography and the portrait scale up, while long-form paragraphs keep readable line lengths.
 
 ## Design and interaction
 
@@ -105,8 +99,7 @@ Published platform work includes [TrackFlow on the Shopify App Store](https://ap
 - Server Action and mail transport: `src/app/contact-actions.ts` and `src/contact-email.ts`
 - Service route template: `src/app/services/[slug]/page.tsx`
 - Hero portrait: `public/developer.webp`
-- Website screenshots and captions: `public/work/`
-- Gallery UI and loader: `src/WebsiteGallery.tsx` and `src/website-work-loader.ts`
+- Client logos: `public/work/`, `src/client-logos.ts` and `src/ClientLogos.tsx`
 - Motion reveals: `src/components.tsx`
 - Project panels: `src/ProjectVisuals.tsx`
 - Published Shopify app and WordPress plugin: `src/PublishedProjects.tsx`

@@ -14,13 +14,11 @@ describe('Portfolio accessibility and navigation', () => {
     for (const match of html.matchAll(/href="#([^"]+)"/g)) expect(ids.has(match[1])).toBe(true);
   });
 
-  it('provides named project panels with matching tab controls', () => {
-    const panels = [...html.matchAll(/role="tabpanel"[^>]*id="([^"]+)"[^>]*aria-labelledby="([^"]+)"/g)];
-    expect(panels).toHaveLength(2);
-    for (const panel of panels) {
-      expect(html).toContain(`id="${panel[2]}"`);
-      expect(html).toContain(`aria-controls="${panel[1]}"`);
-    }
+  it('renders both featured projects with named headings', () => {
+    expect(html).toContain('id="estate-title"');
+    expect(html).toContain('id="arc-title"');
+    expect(html).toContain('EstateHub seller workspace showing appointments and property listings');
+    expect(html).toContain('ARC financial research dashboard showing a company analysis');
   });
 
   it('offers contact and the confirmed project destinations', () => {

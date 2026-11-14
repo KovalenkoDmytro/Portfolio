@@ -1,4 +1,4 @@
-// These assets are client logos, not screenshots for the website gallery.
+// Client logos displayed in the selected work section.
 export const clientLogos = [
   { file: 'File 1.webp', name: 'The Injectionist & Aesthetics' },
   { file: 'File 2.webp', name: 'Client logo', light: true },
@@ -25,5 +25,3 @@ export const clientLogos = [
   { file: 'File 25.webp', name: 'Safety Bath', light: true },
   { file: 'File 26.webp', name: 'Client logo' },
 ] as const;
-
-export const clientLogoFiles = new Set<string>(clientLogos.map(logo => logo.file));
