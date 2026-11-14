@@ -1,6 +1,7 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { extname, join } from 'node:path';
 import type { WebsiteWork } from './website-work';
+import { clientLogoFiles } from './client-logos';
 
 const supportedImages = new Set(['.webp', '.png', '.jpg', '.jpeg', '.avif']);
 const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -14,7 +15,7 @@ export const loadWebsiteWork = (directory = join(process.cwd(), 'public', 'work'
   if (!isRecord(metadata)) throw new Error('public/work/gallery.json must contain an object keyed by image filename.');
 
   const images = readdirSync(directory, { withFileTypes: true })
-    .filter(entry => entry.isFile() && supportedImages.has(extname(entry.name).toLowerCase()))
+    .filter(entry => entry.isFile() && !clientLogoFiles.has(entry.name) && supportedImages.has(extname(entry.name).toLowerCase()))
     .map(entry => {
       const details = metadata[entry.name];
       if (details !== undefined && !isRecord(details)) throw new Error(`Invalid gallery metadata for ${entry.name}.`);

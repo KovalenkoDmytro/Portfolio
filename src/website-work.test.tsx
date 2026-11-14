@@ -25,6 +25,7 @@ describe('Website screenshot gallery', () => {
     const directory = fixtureDirectory();
     writeFileSync(join(directory, '01-Example Company.WEBP'), 'image fixture');
     writeFileSync(join(directory, 'README.md'), 'not an image');
+    writeFileSync(join(directory, 'File 1.png'), 'client logo');
     mkdirSync(join(directory, 'folder.png'));
     expect(loadWebsiteWork(directory)).toEqual([{
       id: '01-Example Company.WEBP',

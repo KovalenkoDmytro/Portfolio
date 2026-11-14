@@ -49,7 +49,9 @@ describe('Portfolio accessibility and navigation', () => {
     expect(html).toContain('developer.webp');
     expect(html).toContain('width="650" height="939"');
     expect(html).toContain('srcSet=');
-    expect(html).not.toContain('loading="lazy"');
+    const portrait = html.match(/<img[^>]*alt="Dmytro Kovalenko, Senior Full-Stack Developer in Calgary"[^>]*>/)?.[0];
+    expect(portrait).toBeDefined();
+    expect(portrait).not.toContain('loading="lazy"');
     expect(html).not.toContain('aria-label="Code examples"');
   });
 });

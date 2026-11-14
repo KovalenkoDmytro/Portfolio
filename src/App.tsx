@@ -20,6 +20,7 @@ import { ContactForm } from './ContactForm';
 import { WebsiteGallery } from './WebsiteGallery';
 import { loadWebsiteWork } from './website-work-loader';
 import { ConversionCTA } from './ConversionCTA';
+import { ClientLogos } from './ClientLogos';
 
 const projectDetails = [
   { title: 'Architecture & ownership', content: 'I designed and built EstateHub solo: the Laravel REST API, PostgreSQL schema, Redis queues and React/TypeScript frontend. The domain model connects multiple participants across an eight-stage transaction lifecycle.' },
@@ -57,6 +58,8 @@ export const App = () => {
           <PublishedProjects />
           <ConversionCTA title="Have a product or workflow in mind?" description="Let’s talk about the people using it, the problem to solve and what a useful first release could look like." label="Discuss your application" source="selected-projects" />
         </Box>
+
+        <ClientLogos />
 
         <AboutSection />
 
