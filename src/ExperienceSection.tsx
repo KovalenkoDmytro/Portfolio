@@ -75,7 +75,7 @@ export const ExperienceSection = () => {
         </Box>;
       })}
     </Box>
-    <Reveal><Stack direction="row" gap={2} alignItems="flex-start" sx={{ mt: 3, pl: { xs: 0, md: 10 }, color: 'text.secondary' }}><SchoolOutlined sx={{ color: 'secondary.main' }} /><Typography variant="body2">Master’s degrees in Computer Science & IT<br />West Pomeranian University of Technology · Odesa Polytechnic National University</Typography></Stack></Reveal>
+    <Reveal><Stack direction="row" gap={2} alignItems="flex-start" sx={{ mt: 3, pl: { xs: 0, md: 10 }, color: 'text.secondary' }}><SchoolOutlined sx={{ color: 'secondary.main' }} /><Typography variant="body2">Two master’s degrees</Typography></Stack></Reveal>
     <ConversionCTA title="Could this experience help your team?" description="Tell me about your role, the product and the engineering challenges you want to solve." label="Let’s talk about your team" source="experience" intent="Hiring / opportunity" />
   </Box>;
 };

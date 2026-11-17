@@ -103,7 +103,6 @@ const technologyIcons: Record<string, SvgIconComponent> = {
   Laravel: CodeRounded,
   React: HubRounded,
   TypeScript: DataObjectRounded,
-  PostgreSQL: StorageRounded,
   Redis: BoltRounded,
   Mapbox: MapRounded,
   MUI: DashboardCustomizeRounded,
