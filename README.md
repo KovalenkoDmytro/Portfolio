@@ -9,7 +9,7 @@ pnpm install
 pnpm dev
 ```
 
-Requires Node.js 20.9+ (Node.js 22 LTS recommended). If pnpm is not installed, use `npx --yes pnpm@10` in its place. npm is also supported with a synchronized package lock.
+Requires Node.js 22+ (needed by better-sqlite3; Node.js 22 LTS recommended). If pnpm is not installed, use `npx --yes pnpm@10` in its place. npm is also supported with a synchronized package lock.
 
 ## Validation
 
@@ -20,7 +20,7 @@ pnpm test
 pnpm build
 ```
 
-`pnpm build` writes the production application to `.next/`. Run it with `pnpm start` (or `pnpm preview`). Deploy to a Next.js-compatible host or a Node.js server; uploading the old Vite `dist/` directory is no longer the deployment workflow. This portfolio needs no PHP backend or database.
+`pnpm build` writes the production application to `.next/`. Run it with `pnpm start` (or `pnpm preview`). Deploy to a Next.js-compatible host or a Node.js server; uploading the old Vite `dist/` directory is no longer the deployment workflow. This portfolio needs no PHP backend. The only storage is the optional self-hosted analytics SQLite file (see Analytics).
 
 ## Deploy to the home server
 
@@ -121,3 +121,23 @@ Library references: [Anime.js React integration](https://animejs.com/documentati
 Run lint, TypeScript, server-rendered navigation/accessibility and SEO tests, and the Next.js production build with the commands above. SEO tests cover visible HTML before hydration, JSON-LD and consistent canonical/sitemap/robots URLs. Service tests cover all seven rendered pages, metadata and unknown-route handling.
 
 The generated `.next/dev/types/validator.ts` is excluded because Next.js 16.4.2 emits unused imports there that conflict with `noUnusedLocals`. Source files remain strict, and the production route validator in `.next/types/` remains included. Browser visual QA requires a connected browser; when unavailable, responsive layouts are reviewed in source and routes are checked over HTTP.
+
+## Analytics
+
+Self-hosted, privacy-friendly visit analytics. No third-party scripts and no client JavaScript: `src/proxy.ts` records a `pageview` row in SQLite for real page navigations (GET, `Accept: text/html`, not a bot, not a prefetch/RSC request). Assets, `/api`, `/admin`, robots/sitemap/icons are never recorded. Code lives in `src/analytics/`; the dashboard is `/admin/analytics?days=7|30|90`.
+
+Environment variables (put them in `~/apps/portfolio/.env.local`, `chmod 600`, and restart with `supervisorctl restart portfolio`; prefer this over the Supervisor `environment=` line so the password is not visible in process config):
+
+- `ANALYTICS_DB_PATH` - SQLite file, default `./data/analytics.db` (gitignored; WAL mode, file mode 600, directory mode 700). A relative path resolves against the process working directory (the app directory under Supervisor), and that directory must be writable by the app user. The size is capped at about 1 GB; past that, inserts fail and are logged. Back the file up with `sqlite3 data/analytics.db ".backup backup.db"` (not a plain copy while it is running).
+- `ADMIN_USER` / `ADMIN_PASSWORD` - HTTP Basic credentials for `/admin/analytics`. The password must be at least 16 characters; if either variable is unset or the password is shorter, the dashboard is inaccessible. Failed attempts are logged (rate-limited, never with credentials). Authorized responses are `no-store, private` and `noindex`.
+
+Cloudflare setup:
+
+- Enable the managed transform "Add visitor location headers" (Rules > Transform Rules > Managed Transforms) so `cf-ipcountry`, `cf-ipcity`, `cf-region` and `cf-region-code` reach the app. Missing values are stored as `Unknown`. A visit with no `cf-connecting-ip` is counted but gets no unique-visitor hash (the dashboard notes how many).
+- Do not cache HTML (keep "Cache Everything" off for page routes), otherwise cached responses never reach the server and are not counted.
+- The `cf-*` headers are trusted as-is, which is only safe if the origin is reachable exclusively through Cloudflare/the tunnel (the app listens on `127.0.0.1`; do not expose the port otherwise).
+- Recommended: add a Cloudflare rate-limiting rule on `/admin*`, or put the path behind Cloudflare Access as a stronger alternative to Basic auth.
+
+Only the homepage and the service pages keep their path; any other URL is stored as `(other)`. Track the resume with a link such as `https://dmytro-kovalenko.ca/?utm_source=resume`; the dashboard highlights `utm_source=resume`.
+
+Privacy: raw IP addresses and user agents are never stored. A visitor is `sha256(daily_salt + ip + user_agent)` with a random salt per UTC day, so "unique visitors" counts a returning visitor once per UTC day, and visitors cannot be linked across days. Only the current day's salt is kept (in memory and in the `salts` table; older salts are deleted on rollover), and `secure_delete` is on. Events (with the day-scoped hashes) are deleted after 1 year, checked once a day. Times are stored in UTC and displayed in America/Edmonton.

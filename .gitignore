@@ -10,3 +10,6 @@ dist/
 
 .idea/
 next-env.d.ts
+
+# Local analytics database
+data/
